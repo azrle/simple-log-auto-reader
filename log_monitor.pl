@@ -26,6 +26,8 @@ $monitor->watch($ARGV[0], sub {
 
             map {
                 my ($time, $content) = $_ =~ /(\d+-\d+-\d+T\d+:\d+:\d+)(.*)$/;
+                ($time, $content) = $_ =~ /(\[.*?\])(.*)$/ unless $content;
+
                 $content =~ s/\\n/\n/g;
                 print RED $time;
                 print BLUE $content;
@@ -34,7 +36,9 @@ $monitor->watch($ARGV[0], sub {
 
             map {
                 my ($time, $content) = $_ =~ /(\d+-\d+-\d+T\d+:\d+:\d+)(.*)$/;
-                $content =~ s/\\n/\n/g;
+                ($time, $content) = $_ =~ /(\[.*?\])(.*)$/ unless $content;
+                
+                $content =~ s/\\n/\n/g if $content;
                 print RED $time;
                 print GREEN $content . "\n\n";
             } @lines[$line_cnt .. (scalar(@lines) - 1)];
