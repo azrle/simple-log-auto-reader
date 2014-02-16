@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# simple log viewer
 use strict;
 use warnings;
 
